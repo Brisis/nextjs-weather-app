@@ -7,26 +7,42 @@ import { BsSearch } from 'react-icons/bs';
 import WeatherComponent from './components/Weather';
 import { IWeather } from '@/types';
 import LoaderComponent from './components/Loader';
+import backgroundImage from '@/../public/background.jpg'
+import ErrorMessageComponent from './components/ErrorMessage';
 
 export default function Home() {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState<IWeather>();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const weather_url = `https://api.weatherapi.com/v1/current.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${city}`
 
   const getWeather = async (e: any) => {
+    //prevent default page refresh
     e.preventDefault();
+
     try {
+      setWeather(undefined);
+      setError('');
       setLoading(true);
 
+      // -- get weather response from our api --
       const response = await axios.get(weather_url);
       setWeather(response.data);
 
       setCity('');
       setLoading(false);
     } catch (error: any) {
-      console.log(error);
+
+      // console.log(error);
+
+      setLoading(false);
+      // -- display error message to the user --
+      setError(`We\'re sorry, something went wrong on our end. Please try again later or check to see if your entered location for '${city}' is correct.`)
+      
+      setCity('');
+      setWeather(undefined);
     }
   }
 
@@ -35,10 +51,10 @@ export default function Home() {
     <div>
 
       {/* --- background image overlay --- */}
-      <div className='absolute top-0 left-0 right-0 bottom-0 bg-black/40 z-[1]'/>
+      <div className='absolute top-0 left-0 right-0 bottom-0 bg-black/70 z-[1]'/>
 
       {/* --- background image --- */}
-      <Image src='https://images.unsplash.com/photo-1601134467661-3d775b999c8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1975&q=80'
+      <Image src={backgroundImage}
       layout='fill' alt='background image' className='object-cover' />
 
       {/* --- search form --- */}
@@ -49,8 +65,8 @@ export default function Home() {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               type='text' 
-              placeholder='Search city' 
-              className='bg-transparent border-none text-white focus:outline-none text-2xl' />
+              placeholder='Enter your location' 
+              className='bg-transparent border-none text-white placeholder:text-white focus:outline-none text-2xl' />
           </div>
           <button 
             onClick={getWeather}>
@@ -59,6 +75,10 @@ export default function Home() {
         </form>
       </div>
 
+
+      { error.length > 0 && <ErrorMessageComponent  message={error} /> }
+
+      {/* --- show loading spinner --- */}
       { loading && <LoaderComponent /> }
 
       {/* --- weather component --- */}

@@ -5,9 +5,7 @@ type Props = {
     data: IWeather
 }
 
-const WeatherComponent: React.FC<Props> = ({ data }) => {
-    console.log(data);    
-    
+const WeatherComponent: React.FC<Props> = ({ data }) => {    
     return(
         <div 
             className='relative flex flex-col justify-between max-w-[600px] w-full h-[90vh] m-auto p-4 text-gray-300 z-10'>
