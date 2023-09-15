@@ -3,7 +3,7 @@ const nextConfig = {
     images: {
         domains: [
             'images.unsplash.com',
-            'openweathermap.org'
+            'cdn.weatherapi.com'
         ]
     }
 }

@@ -5,15 +5,15 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import WeatherComponent from './components/Weather';
-import { IMainWeather } from '@/types';
+import { IWeather } from '@/types';
 import LoaderComponent from './components/Loader';
 
 export default function Home() {
   const [city, setCity] = useState('');
-  const [weather, setWeather] = useState<IMainWeather>();
+  const [weather, setWeather] = useState<IWeather>();
   const [loading, setLoading] = useState(false);
 
-  const weather_url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
+  const weather_url = `https://api.weatherapi.com/v1/current.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${city}`
 
   const getWeather = async (e: any) => {
     e.preventDefault();
@@ -42,7 +42,7 @@ export default function Home() {
       layout='fill' alt='background image' className='object-cover' />
 
       {/* --- search form --- */}
-      <div className='relative flex justify-between items-center max-w-[500px] w-full m-auto pt-4 text-white z-10'>
+      <div className='relative flex justify-between items-center max-w-[600px] w-full m-auto pt-4 text-white z-10'>
         <form className='flex justify-between items-center w-full m-auto p-3 bg-transparent border border-gray-300 text-white rounded-2xl'>
           <div>
             <input 
@@ -62,7 +62,7 @@ export default function Home() {
       { loading && <LoaderComponent /> }
 
       {/* --- weather component --- */}
-      { weather?.main && <WeatherComponent data={weather} /> }
+      { weather?.current && <WeatherComponent data={weather} /> }
     </div>
   )
 }
