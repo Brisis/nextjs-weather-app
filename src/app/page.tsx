@@ -2,13 +2,13 @@
 
 import Image from 'next/image'
 import axios from 'axios';
-import { useState } from 'react';
-import { BsSearch } from 'react-icons/bs';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import WeatherComponent from './components/Weather';
 import { IWeather } from '@/types';
 import LoaderComponent from './components/Loader';
 import backgroundImage from '@/../public/background.jpg'
 import ErrorMessageComponent from './components/ErrorMessage';
+import SearchComponent from './components/Search';
 
 export default function Home() {
   const [city, setCity] = useState('');
@@ -18,32 +18,36 @@ export default function Home() {
 
   const weather_url = `https://api.weatherapi.com/v1/current.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${city}`
 
-  const getWeather = async (e: any) => {
+  const getWeather = async (e: FormEvent) => {
     //prevent default page refresh
     e.preventDefault();
 
     try {
-      setWeather(undefined);
-      setError('');
       setLoading(true);
-
       // -- get weather response from our api --
       const response = await axios.get(weather_url);
-      setWeather(response.data);
 
-      setCity('');
+      setCity('')
       setLoading(false);
+
+      setWeather(response.data);
     } catch (error: any) {
-
-      // console.log(error);
-
       setLoading(false);
       // -- display error message to the user --
       setError(`We\'re sorry, something went wrong on our end. Please try again later or check to see if your entered location for '${city}' is correct.`)
-      
       setCity('');
-      setWeather(undefined);
     }
+  }
+
+  useEffect(() => {
+    if (loading) {
+      setWeather(undefined);
+      setError('');
+    }
+  })
+
+  const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCity(e.target.value.trim())
   }
 
   
@@ -55,26 +59,17 @@ export default function Home() {
 
       {/* --- background image --- */}
       <Image src={backgroundImage}
-      layout='fill' alt='background image' className='object-cover' />
+      fill={true} alt='background image' className='object-cover' />
 
       {/* --- search form --- */}
-      <div className='relative flex justify-between items-center max-w-[600px] w-full m-auto pt-4 px-4 text-white z-10'>
-        <form className='flex justify-between items-center w-full m-auto p-3 bg-transparent border border-gray-300 text-white rounded-2xl'>
-          <div>
-            <input 
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              type='text' 
-              placeholder='Enter your location' 
-              className='bg-transparent border-none text-white placeholder:text-white focus:outline-none sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl' />
-          </div>
-          <button 
-            onClick={getWeather}>
-              <BsSearch size={20} />
-          </button>
-        </form>
-      </div>
+      <SearchComponent 
+        value={city}  
+        placeholder='Enter your location' 
+        onChange={handleSearchInputChange} 
+        onSubmit={getWeather} 
+      />
 
+      <h1>This is a test</h1>
 
       {/* --- show error message --- */}
       { error.length > 0 && <ErrorMessageComponent  message={error} /> }
