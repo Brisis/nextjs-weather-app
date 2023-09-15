@@ -15,4 +15,4 @@ const LoaderComponent = () => {
     )
 }
 
-export default LoaderComponent
+export default LoaderComponent;

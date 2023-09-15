@@ -58,7 +58,7 @@ export default function Home() {
       layout='fill' alt='background image' className='object-cover' />
 
       {/* --- search form --- */}
-      <div className='relative flex justify-between items-center max-w-[600px] w-full m-auto pt-4 text-white z-10'>
+      <div className='relative flex justify-between items-center max-w-[600px] w-full m-auto pt-4 px-4 text-white z-10'>
         <form className='flex justify-between items-center w-full m-auto p-3 bg-transparent border border-gray-300 text-white rounded-2xl'>
           <div>
             <input 
@@ -66,7 +66,7 @@ export default function Home() {
               onChange={(e) => setCity(e.target.value)}
               type='text' 
               placeholder='Enter your location' 
-              className='bg-transparent border-none text-white placeholder:text-white focus:outline-none text-2xl' />
+              className='bg-transparent border-none text-white placeholder:text-white focus:outline-none sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl' />
           </div>
           <button 
             onClick={getWeather}>
@@ -76,6 +76,7 @@ export default function Home() {
       </div>
 
 
+      {/* --- show error message --- */}
       { error.length > 0 && <ErrorMessageComponent  message={error} /> }
 
       {/* --- show loading spinner --- */}

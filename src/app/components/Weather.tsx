@@ -17,25 +17,25 @@ const WeatherComponent: React.FC<Props> = ({ data }) => {
                         width='100' 
                         height='100' 
                     />
-                    <p className='text-2xl'>{ data.current.condition.text }</p>
+                    <p className='sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl 2xl:text-2xl'>{ data.current.condition.text }</p>
                 </div>
                 <p className='text-9xl'>{ data.current.temp_c.toFixed(0) }&#176;</p>
             </div>
 
             <div className='bg-black/50 relative p-8 rounded-md'>
-                <p className='text-2xl text-center pb-6'>Weather in { data.location.name }</p>
+                <p className='sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl 2xl:text-2xl text-center pb-6'>Weather in { data.location.name }</p>
                 <div className='flex justify-between text-center'>
                     <div>
-                        <p className='font-bold text-2xl'>{ data.current.precip_in }%</p>
-                        <p className='text-xl'>Precipitation</p>
+                        <p className='font-bold sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl 2xl:text-2xl'>{ data.current.precip_in }%</p>
+                        <p className='sm:text-xl md:text-xl lg:text-xl xl:text-xl 2xl:text-xl'>Precipitation</p>
                     </div>
                     <div>
-                        <p className='font-bold text-2xl'>{ data.current.wind_kph.toFixed(0) } KM/H</p>
-                        <p className='text-xl'>Wind Speed</p>
+                        <p className='font-bold sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl 2xl:text-2xl'>{ data.current.wind_kph.toFixed(0) } KM/H</p>
+                        <p className='sm:text-xl md:text-xl lg:text-xl xl:text-xl 2xl:text-xl'>Wind Speed</p>
                     </div>
                     <div>
-                        <p className='font-bold text-2xl'>{ data.current.wind_degree.toFixed(0) }&#176; {data.current.wind_dir}</p>
-                        <p className='text-xl'>Wind Direction</p>
+                        <p className='font-bold sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl 2xl:text-2xl'>{ data.current.wind_degree.toFixed(0) }&#176; {data.current.wind_dir}</p>
+                        <p className='sm:text-xl md:text-xl lg:text-xl xl:text-xl 2xl:text-xl'>Wind Direction</p>
                     </div>
                 </div>
             </div>
@@ -43,4 +43,4 @@ const WeatherComponent: React.FC<Props> = ({ data }) => {
     );
 }
 
-export default WeatherComponent
+export default WeatherComponent;
