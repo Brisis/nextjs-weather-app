@@ -10,6 +10,11 @@ npm install
 yarn install
 ```
 
+Create a .env file in the main project directory and paste your API Key from WeatherAPI.com 
+```bash
+NEXT_PUBLIC_WEATHER_API_KEY = API KEY HERE
+```
+
 Then, run the development server:
 
 ```bash
