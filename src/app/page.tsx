@@ -3,12 +3,12 @@
 import Image from 'next/image'
 import axios from 'axios';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import WeatherComponent from './components/Weather';
+import WeatherComponent from './components/Weather/Weather';
 import { IWeather } from '@/types';
 import LoaderComponent from './components/Loader';
 import backgroundImage from '@/../public/background.jpg'
-import ErrorMessageComponent from './components/ErrorMessage';
-import SearchComponent from './components/Search';
+import ErrorMessageComponent from './components/ErrorMessage/ErrorMessage';
+import SearchComponent from './components/Search/Search';
 
 export default function Home() {
   const [city, setCity] = useState('');
@@ -68,8 +68,6 @@ export default function Home() {
         onChange={handleSearchInputChange} 
         onSubmit={getWeather} 
       />
-
-      <h1>This is a test</h1>
 
       {/* --- show error message --- */}
       { error.length > 0 && <ErrorMessageComponent  message={error} /> }
